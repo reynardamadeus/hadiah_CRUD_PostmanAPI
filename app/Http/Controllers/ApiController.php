@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Mahasiswa;
+use App\Http\Resources\MahasiswaResource;
+
 class ApiController extends Controller
 {
     function getMahasiswa(){
-        $mahasiswa = Mahasiswa::all();
-        return $mahasiswa;
+        return MahasiswaResource::collection(Mahasiswa::paginate(2));
     }
 
     function storeMahasiswa(Request $request) {
@@ -30,6 +31,7 @@ class ApiController extends Controller
             'dateOfBirth' => $request->dateOfBirth,
             'selfPhoto' => $filename,
         ]);
+
 
         return 'Data Mahasiswa berhasil dibuat!';
     }
